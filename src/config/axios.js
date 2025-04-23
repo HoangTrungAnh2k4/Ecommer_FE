@@ -31,7 +31,7 @@ instance.interceptors.response.use(
         ) {
             // Access token is expired or invalid
             localStorage.removeItem('access_token');
-            // window.location.href = '/login';
+            window.location.href = '/login';
         } else if (!error.response && error.request) {
             // Request was made but no response was received
             console.error('No response received:', error.request);
