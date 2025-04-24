@@ -1,6 +1,6 @@
 import instance from '../config/axios';
 
-const CLIENT_URL = import.meta.env.VITE_CLIENT_API_URL || 'http://localhost:3000';
+const CLIENT_URL = import.meta.env.VITE_CLIENT_API_URL;
 
 // -------------------------------------------------
 //               api about equipment
