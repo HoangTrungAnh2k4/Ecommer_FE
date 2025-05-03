@@ -1,7 +1,4 @@
 import { useEffect, useState } from 'react';
-import { FaUser } from 'react-icons/fa';
-import { BsMenuUp } from 'react-icons/bs';
-import pc from '../../../public/pc2.jpg';
 import { getEquipmentDetailAPI, getOrderAPI } from '../../api/userAPI';
 
 const avatr = 'https://nguyencongpc.vn/media/product/250-25318-custom.jpg';
@@ -83,6 +80,8 @@ function RoleUSer() {
         );
     }
 
+    console.log(orders);
+
     return (
         <div className="flex gap-20">
             <ul className="w-full">
@@ -100,10 +99,13 @@ function RoleUSer() {
                                 {item.items.length != 0 &&
                                     item.items?.map((item2, index) => {
                                         return (
-                                            <div key={index} className="justify-between border-b-2 border-gray-200 py-6">
+                                            <div
+                                                key={index}
+                                                className="justify-between border-b-2 border-gray-200 py-6"
+                                            >
                                                 <div className="flex gap-4">
                                                     <img
-                                                        src={avatr}
+                                                        src={item2.image_url}
                                                         alt=""
                                                         className="size-[120px] object-cover object-center"
                                                     />

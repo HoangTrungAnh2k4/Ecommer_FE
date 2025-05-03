@@ -5,6 +5,8 @@ import { Dropdown, Space } from 'antd';
 
 import logo from '../../assets/images/general/logo.png';
 import Cart from '../ui/Cart';
+import { FaSignOutAlt } from 'react-icons/fa';
+import { FaUser } from 'react-icons/fa6';
 
 function HeaderPage() {
     const avatr = 'https://cdn.kona-blue.com/upload/kona-blue_com/post/images/2024/09/18/457/avatar-mac-dinh-12.jpg';
@@ -24,18 +26,34 @@ function HeaderPage() {
     const items = [
         {
             label: (
-                <Link to={'/manage-account'} className="">
-                    Your profile
-                </Link>
+                <div className="mb-4 cursor-text pr-4">
+                    <p className="mb-1 text-sm">Xin chào</p>
+                </div>
             ),
             key: '0',
+            disable: true,
+        },
+
+        {
+            label: (
+                <Link to="/manage-account" className="mb-2 flex items-center pr-4">
+                    <FaUser className="mr-3 text-sm" />
+                    Tài khoản
+                </Link>
+            ),
+            key: '2',
         },
         {
             type: 'divider',
         },
         {
-            label: <div onClick={handleLogout}>Đăng xuất</div>,
-            key: '1',
+            label: (
+                <div onClick={handleLogout} className="flex items-center pr-4">
+                    <FaSignOutAlt className="mr-3 text-sm" />
+                    Thoát
+                </div>
+            ),
+            key: '3',
         },
     ];
 
