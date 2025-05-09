@@ -131,19 +131,19 @@ function ListProductFlowType() {
 
     return (
         <div className="container">
-            <img src={equipmentType[id]?.img} alt={equipmentType[id]?.des} className="w-full rounded-lg" />
+            <img src={equipmentType[id]?.img} alt={equipmentType[id]?.des} className="rounded-lg w-full" />
 
-            <h1 className="mt-6 text-center text-2xl font-semibold text-[#0f5b99]">{equipmentType[id]?.des}</h1>
+            <h1 className="mt-6 font-semibold text-[#0f5b99] text-2xl text-center">{equipmentType[id]?.des}</h1>
 
-            <div className="mt-6 rounded-lg bg-gradient-to-r from-[#8f0000] via-redColor to-[#8f0000] px-6 py-6">
-                <h3 className="text-center text-3xl font-semibold text-white">TOP 5 SẢN PHẨM</h3>
-                <div className="mt-6 flex gap-6">
+            <div className="bg-gradient-to-r from-[#8f0000] via-redColor to-[#8f0000] mt-6 px-6 py-6 rounded-lg">
+                <h3 className="font-semibold text-white text-3xl text-center">TOP 5 SẢN PHẨM</h3>
+                <div className="flex gap-6 mt-6">
                     {loading ? (
-                        <div className="flex h-[300px] items-center justify-center rounded-lg border bg-[#f8f8f8] text-[#515151]">
+                        <div className="flex justify-center items-center bg-[#f8f8f8] border rounded-lg h-[300px] text-[#515151]">
                             Loading...
                         </div>
                     ) : listBestSeller.length === 0 ? (
-                        <div className="flex h-[300px] items-center justify-center rounded-lg border bg-[#f8f8f8] text-[#515151]">
+                        <div className="flex justify-center items-center bg-[#f8f8f8] border rounded-lg h-[300px] text-[#515151]">
                             Không có sản phẩm nào
                         </div>
                     ) : (
@@ -151,7 +151,8 @@ function ListProductFlowType() {
                             <ItemCard
                                 key={index}
                                 item={{
-                                    image: item.image_url,
+                                    id: item._id,
+                                    urlImage: item.urlImage,
                                     best_seller: item.best_seller,
                                     name: item.name,
                                     price: item.price,
@@ -166,9 +167,9 @@ function ListProductFlowType() {
                 </div>
             </div>
 
-            <div className="mt-6 rounded-lg border bg-white">
-                <div className="flex border-b border-gray-300 p-4">
-                    <p className="mr-6 w-fit flex-shrink-0 text-sm font-semibold">Khoảng giá:</p>
+            <div className="bg-white mt-6 border rounded-lg">
+                <div className="flex p-4 border-gray-300 border-b">
+                    <p className="flex-shrink-0 mr-6 w-fit font-semibold text-sm">Khoảng giá:</p>
                     <ul className="flex flex-wrap gap-4">
                         {priceRanges.map((range, index) => {
                             const isSelected = priceRange?.min === range.min && priceRange?.max === range.max;
@@ -187,14 +188,14 @@ function ListProductFlowType() {
                     </ul>
                 </div>
                 <div className="flex p-4">
-                    <p className="mr-6 w-fit flex-shrink-0 text-sm font-semibold">Chọn theo tiêu chí:</p>
+                    <p className="flex-shrink-0 mr-6 w-fit font-semibold text-sm">Chọn theo tiêu chí:</p>
                     <ul className="flex flex-wrap gap-4"></ul>
                 </div>
             </div>
 
-            <div className="mt-6 rounded-lg border bg-white p-4">
+            <div className="bg-white mt-6 p-4 border rounded-lg">
                 {/* filter */}
-                <div className="inline-flex w-full gap-4">
+                <div className="inline-flex gap-4 w-full">
                     <div
                         onClick={() => {
                             setSortBy('asc');
@@ -219,7 +220,7 @@ function ListProductFlowType() {
                         onClick={() => {
                             removeFilter();
                         }}
-                        className="flex w-fit cursor-pointer items-center gap-2 rounded-lg border bg-[#f8f8f8] px-[10px] py-2 text-sm text-[#515151] hover:shadow-inner hover:shadow-gray-400"
+                        className="flex items-center gap-2 bg-[#f8f8f8] hover:shadow-gray-400 hover:shadow-inner px-[10px] py-2 border rounded-lg w-fit text-[#515151] text-sm cursor-pointer"
                     >
                         <p>Bỏ filter</p>
                     </div>
@@ -229,7 +230,7 @@ function ListProductFlowType() {
                             onClick={() => {
                                 setVisible(true);
                             }}
-                            className="btn ml-auto flex w-fit cursor-pointer items-center gap-4 rounded-lg border bg-[#f8f8f8] px-[10px] py-2 text-[#515151] hover:bg-gray-200"
+                            className="flex items-center gap-4 bg-[#f8f8f8] hover:bg-gray-200 ml-auto px-[10px] py-2 border rounded-lg w-fit text-[#515151] cursor-pointer btn"
                         >
                             <p>Thêm sản phẩm</p>
                             <FaPlus className="text-xl" />
@@ -237,13 +238,13 @@ function ListProductFlowType() {
                     )}
                 </div>
 
-                <div className="mt-6 flex flex-wrap gap-6">
+                <div className="flex flex-wrap gap-6 mt-6">
                     {loading ? (
-                        <div className="flex h-[300px] items-center justify-center rounded-lg border bg-[#f8f8f8] text-[#515151]">
+                        <div className="flex justify-center items-center bg-[#f8f8f8] border rounded-lg h-[300px] text-[#515151]">
                             Loading...
                         </div>
                     ) : filerListProduct.length === 0 ? (
-                        <div className="flex h-[300px] items-center justify-center rounded-lg border bg-[#f8f8f8] text-[#515151]">
+                        <div className="flex justify-center items-center bg-[#f8f8f8] border rounded-lg h-[300px] text-[#515151]">
                             Không có sản phẩm nào
                         </div>
                     ) : (
@@ -251,8 +252,8 @@ function ListProductFlowType() {
                             <ItemCard
                                 key={index}
                                 item={{
-                                    id: item.id,
-                                    image: item.image_url,
+                                    id: item._id,
+                                    urlImage: item.urlImage,
                                     best_seller: item.best_seller,
                                     name: item.name,
                                     price: item.price,

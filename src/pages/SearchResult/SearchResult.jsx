@@ -4,12 +4,13 @@ import { searchAPI } from '../../api/userAPI';
 import { useLocation } from 'react-router-dom';
 import ItemCard from '../../components/ui/Item.card';
 import { Pagination } from 'antd';
+import { toast } from 'react-toastify';
 
 const priceRanges = [
-    { label: '1 triệu - 4 triệu', min: 1_000_000, max: 4_000_000 },
-    { label: '5 triệu - 9 triệu', min: 5_000_000, max: 9_000_000 },
-    { label: '10 triệu - 15 triệu', min: 10_000_000, max: 15_000_000 },
-    { label: '16 triệu - 20 triệu', min: 16_000_000, max: 20_000_000 },
+    { label: '1 triệu - 4 triệu', min: 1_000_000, max: 4_999_000 },
+    { label: '5 triệu - 9 triệu', min: 5_000_000, max: 9_999_000 },
+    { label: '10 triệu - 15 triệu', min: 10_000_000, max: 15_999_000 },
+    { label: '16 triệu - 20 triệu', min: 16_000_000, max: 20_999_000 },
     { label: 'trên 21 triệu ', min: 21_000_000, max: Infinity },
 ];
 
@@ -50,6 +51,12 @@ function SearchResult() {
     };
 
     useEffect(() => {
+        toast.success(`Tìm thấysản phẩm cho từ khóa "${keyword}"`);
+
+        setCurrentPage(1);
+    }, [keyword]);
+
+    useEffect(() => {
         window.scrollTo(0, 0);
         const handleSearch = async () => {
             try {
@@ -76,11 +83,12 @@ function SearchResult() {
         };
         handleSearch();
     }, [keyword, currentPage, priceRange]);
+
     return (
         <div className="container">
-            <div className="mt-6 rounded-lg border bg-white">
-                <div className="flex border-b border-gray-300 p-4">
-                    <p className="mr-6 w-fit flex-shrink-0 text-sm font-semibold">Khoảng giá:</p>
+            <div className="bg-white mt-6 border rounded-lg">
+                <div className="flex p-4 border-gray-300 border-b">
+                    <p className="flex-shrink-0 mr-6 w-fit font-semibold text-sm">Khoảng giá:</p>
                     <ul className="flex flex-wrap gap-4">
                         {priceRanges.map((range, index) => {
                             const isSelected = priceRange?.min === range.min && priceRange?.max === range.max;
@@ -100,14 +108,14 @@ function SearchResult() {
                     </ul>
                 </div>
                 <div className="flex p-4">
-                    <p className="mr-6 w-fit flex-shrink-0 text-sm font-semibold">Chọn theo tiêu chí:</p>
+                    <p className="flex-shrink-0 mr-6 w-fit font-semibold text-sm">Chọn theo tiêu chí:</p>
                     <ul className="flex flex-wrap gap-4"></ul>
                 </div>
             </div>
 
-            <div className="mt-6 rounded-lg border bg-white p-4">
+            <div className="bg-white mt-6 p-4 border rounded-lg">
                 {/* filter */}
-                <div className="inline-flex w-full gap-4">
+                <div className="inline-flex gap-4 w-full">
                     <div
                         onClick={() => {
                             setSortBy('asc');
@@ -133,13 +141,13 @@ function SearchResult() {
                         onClick={() => {
                             removeFilter();
                         }}
-                        className="flex w-fit cursor-pointer items-center gap-2 rounded-lg border bg-[#f8f8f8] px-[10px] py-2 text-sm text-[#515151] hover:shadow-inner hover:shadow-gray-400"
+                        className="flex items-center gap-2 bg-[#f8f8f8] hover:shadow-gray-400 hover:shadow-inner px-[10px] py-2 border rounded-lg w-fit text-[#515151] text-sm cursor-pointer"
                     >
                         <p>Bỏ filter</p>
                     </div>
                 </div>
 
-                <div className="mt-6 flex flex-wrap gap-2">
+                <div className="flex flex-wrap gap-2 mt-6">
                     {searchResult.length === 0 ? (
                         <img
                             src="https://grgarments.in/images/product-not-found.png"
@@ -151,8 +159,8 @@ function SearchResult() {
                             <ItemCard
                                 key={index}
                                 item={{
-                                    id: item.id,
-                                    image: item.image_url,
+                                    id: item._id,
+                                    urlImage: item.urlImage,
                                     best_seller: item.best_seller,
                                     name: item.name,
                                     price: item.price,
@@ -164,9 +172,9 @@ function SearchResult() {
                         ))
                     )}
                 </div>
-                <div className="mt-6 justify-items-center">
+                <div className="justify-items-center mt-6">
                     <Pagination
-                        defaultCurrent={currentPage}
+                        current={currentPage}
                         total={totalPage}
                         defaultPageSize={1}
                         onChange={handleChangePage}

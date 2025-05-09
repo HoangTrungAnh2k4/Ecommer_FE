@@ -34,8 +34,8 @@ function Slider({ list }) {
                     <SwiperSlide key={index}>
                         <ItemCard
                             item={{
-                                id: item.id,
-                                image: item.image_url,
+                                id: item._id,
+                                urlImage: item.urlImage,
                                 best_seller: item.best_seller,
                                 name: item.name,
                                 price: item.price,

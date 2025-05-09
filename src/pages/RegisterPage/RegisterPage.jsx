@@ -10,13 +10,12 @@ function RegisterPage() {
         e.preventDefault();
         const formData = new FormData(e.target);
 
-        const name = formData.get('userName');
+        const username = formData.get('userName');
         const phoneNumber = formData.get('phoneNumber');
-        const email = formData.get('email');
         const password = formData.get('password');
         const confirmPassword = formData.get('confirmPassword');
 
-        if (!name || !phoneNumber || !email || !password || !confirmPassword) {
+        if (!username || !phoneNumber || !password || !confirmPassword) {
             toast.error('Vui lòng điền đầy đủ thông tin!');
             return;
         }
@@ -32,11 +31,9 @@ function RegisterPage() {
         }
 
         const data = {
-            name,
+            username,
             phoneNumber,
-            email,
             password,
-            confirmPassword,
             role: 'user',
         };
 
@@ -99,22 +96,7 @@ function RegisterPage() {
                             Số điện thoại
                         </label>
                     </div>
-                    <div className="group relative z-0 mb-6 w-full">
-                        <input
-                            type="email"
-                            name="email"
-                            id="email"
-                            className="peer block w-full appearance-none border-0 border-b border-gray-300 bg-transparent px-0 py-2.5 text-gray-900 outline-none"
-                            placeholder=" "
-                            required
-                        />
-                        <label
-                            htmlFor="email"
-                            className="absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-gray-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:start-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium peer-focus:text-gray-600 rtl:peer-focus:left-auto rtl:peer-focus:translate-x-1/4 dark:text-gray-400"
-                        >
-                            Gmail
-                        </label>
-                    </div>
+
                     <div className="group relative z-0 mb-6 w-full">
                         <input
                             type="password"

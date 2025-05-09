@@ -5,9 +5,6 @@ import { useEffect, useState } from 'react';
 import { addNewOrderAPI, updateEquipmentAPI } from '../../api/userAPI';
 import { toast } from 'react-toastify';
 
-const avatr =
-    'https://danhgiaxe.edu.vn/upload/2024/12/bo-suu-tap-hinh-anh-gai-k8-dep-quyen-ru-khien-ban-say-dam-4.webp';
-
 function CheckoutPage() {
     const [listCheckout, setListCheckout] = useState([]);
     const [totalPrice, setTotalPrice] = useState(0);
@@ -43,7 +40,7 @@ function CheckoutPage() {
             const data = {
                 listEquipment: listCheckout.map((item) => {
                     return {
-                        id: item.id,
+                        equipmentId: item.id || item._id,
                         quantity: item.quantity,
                     };
                 }),
@@ -89,26 +86,26 @@ function CheckoutPage() {
 
     if (Checkouted) {
         return (
-            <div className="mx-auto flex w-full flex-col items-center justify-center gap-4">
+            <div className="flex flex-col justify-center items-center gap-4 mx-auto w-full">
                 <div className="mt-[5%] text-[160px] text-green-600">
                     <IoMdCheckmarkCircleOutline />
                 </div>
 
-                <h3 className="text-2xl font-semibold text-orange-600">Đặt hàng thành công</h3>
+                <h3 className="font-semibold text-orange-600 text-2xl">Đặt hàng thành công</h3>
                 <p className="text-lg">Chúng tôi sẽ liên hệ quý khách để xác nhận đơn hàng trong thời gian sớm nhất</p>
             </div>
         );
     }
 
     return (
-        <div className="mx-auto flex gap-12">
-            <div className="w-4/6 rounded-lg border px-6 py-4 shadow-lg">
+        <div className="flex gap-12 mx-auto">
+            <div className="shadow-lg px-6 py-4 border rounded-lg w-4/6">
                 <button
                     onClick={() => {
                         setListCheckout([]);
                         sessionStorage.setItem('listCheckout', JSON.stringify([]));
                     }}
-                    className="ml-auto block border px-2 py-1 text-sm"
+                    className="block ml-auto px-2 py-1 border text-sm"
                 >
                     Xóa giỏ hàng
                 </button>
@@ -116,31 +113,35 @@ function CheckoutPage() {
                     {listCheckout.length != 0 &&
                         listCheckout?.map((item, index) => {
                             return (
-                                <li key={index} className="flex justify-between gap-6 border-b-2 border-gray-300 py-6">
-                                    <img src={avatr} alt="" className="size-[120px] object-cover object-center" />
+                                <li key={index} className="flex justify-between gap-6 py-6 border-gray-300 border-b-2">
+                                    <img
+                                        src={item.urlImage}
+                                        alt=""
+                                        className="size-[120px] object-center object-cover"
+                                    />
                                     <p className="font-semibold text-textColor2">{item.name}</p>
                                     <div className="flex max-w-[8rem]">
                                         <button
                                             onClick={() => {
                                                 handleChangeQuantity(item.id, 'minus');
                                             }}
-                                            className="h-11 rounded-s-lg border border-gray-300 bg-gray-50 p-3"
+                                            className="bg-gray-50 p-3 border border-gray-300 rounded-s-lg h-11"
                                         >
                                             <FaMinus />
                                         </button>
-                                        <span className="flex h-11 w-20 items-center justify-center border border-x-0 border-gray-300 bg-gray-50 py-2.5 text-center text-sm text-gray-900 outline-none">
+                                        <span className="flex justify-center items-center bg-gray-50 py-2.5 border border-gray-300 border-x-0 outline-none w-20 h-11 text-gray-900 text-sm text-center">
                                             {item.quantity}
                                         </span>
                                         <button
                                             onClick={() => {
                                                 handleChangeQuantity(item.id, 'plus');
                                             }}
-                                            className="h-11 rounded-e-lg border border-gray-300 bg-gray-50 p-3"
+                                            className="bg-gray-50 p-3 border border-gray-300 rounded-e-lg h-11"
                                         >
                                             <FaPlus />
                                         </button>
                                     </div>
-                                    <div className="flex flex-col items-end justify-between">
+                                    <div className="flex flex-col justify-between items-end">
                                         <p className="font-semibold text-redColor">
                                             {item.price?.toLocaleString('vi-VN')}
                                         </p>
@@ -148,7 +149,7 @@ function CheckoutPage() {
                                             onClick={() => {
                                                 handleDeleteItem(item.id);
                                             }}
-                                            className="cursor-pointer rounded-full bg-gray-200 p-[6px] text-3xl hover:scale-110"
+                                            className="bg-gray-200 p-[6px] rounded-full text-3xl hover:scale-110 cursor-pointer"
                                         />
                                     </div>
                                 </li>
@@ -157,12 +158,12 @@ function CheckoutPage() {
                 </ul>
             </div>
 
-            <div className="sticky top-0 h-fit rounded-lg border px-8 pt-4 shadow-lg">
-                <h3 className="text-xl font-semibold text-textColor1">Thông tin đơn hàng</h3>
+            <div className="top-0 sticky shadow-lg px-8 pt-4 border rounded-lg h-fit">
+                <h3 className="font-semibold text-textColor1 text-xl">Thông tin đơn hàng</h3>
 
                 <div className="mt-6">
                     <p className="font-semibold">Phương thức thanh toán:</p>
-                    <div className="mt-2 flex items-center gap-2">
+                    <div className="flex items-center gap-2 mt-2">
                         <input id="delivery" type="radio" checked={true} />
                         <label htmlFor="delivery" className="text-sm">
                             Thanh toán khi nhận hàng
@@ -170,12 +171,12 @@ function CheckoutPage() {
                     </div>
                 </div>
 
-                <div className="mt-6 flex justify-between border-b-2 border-gray-400 pb-4">
+                <div className="flex justify-between mt-6 pb-4 border-gray-400 border-b-2">
                     <p className="font-semibold">Tổng tiền:</p>
-                    <p className="text-xl font-semibold text-redColor">{totalPrice.toLocaleString('vi-VN')}</p>
+                    <p className="font-semibold text-redColor text-xl">{totalPrice.toLocaleString('vi-VN')}</p>
                 </div>
 
-                <ul className="mt-6 list-disc text-sm text-textColor2">
+                <ul className="mt-6 text-textColor2 text-sm list-disc">
                     <li>Phí vận chuyển sẽ được tính ở trang thanh toán.</li>
                     <li>Bạn có thể nhập mã giảm giá ở trang thanh toán.</li>
                 </ul>
@@ -184,7 +185,7 @@ function CheckoutPage() {
                     onClick={() => {
                         handleCheckouted();
                     }}
-                    className="mx-auto mb-6 mt-10 block w-2/5 rounded-lg bg-primary from-primary to-second py-2 text-white hover:bg-gradient-to-tr"
+                    className="block bg-primary hover:bg-gradient-to-tr from-primary to-second mx-auto mt-10 mb-6 py-2 rounded-lg w-2/5 text-white"
                 >
                     ĐẶT HÀNG
                 </button>

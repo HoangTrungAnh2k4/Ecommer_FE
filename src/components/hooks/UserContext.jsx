@@ -14,7 +14,7 @@ export const UserProvider = ({ children }) => {
 
             try {
                 const res = await getUserInforAPI();
-                setUserInfo(res.data.userInfor);
+                setUserInfo(res.data);
             } catch (err) {
                 console.error('Lỗi khi lấy user info:', err);
             }

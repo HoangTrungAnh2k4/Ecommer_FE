@@ -13,18 +13,6 @@ import { useEffect, useState } from 'react';
 import { getEquipmentDetailAPI, getRateAPI, addToCartAPI } from '../../api/userAPI';
 import { toast } from 'react-toastify';
 
-const mockImage = {
-    pc: [
-        'https://nguyencongpc.vn/media/product/250-27600-pc-gaming-i5-14600kf-ram-32g-rgb-vga-rtx-5070-12g-005.jpg',
-        'https://nguyencongpc.vn/media/product/250-27600-pc-gaming-i5-14600kf-ram-32g-rgb-vga-rtx-5070-12g-006.jpg',
-        'https://nguyencongpc.vn/media/product/250-27600-pc-gaming-i5-14600kf-ram-32g-rgb-vga-rtx-5070-12g-003.jpg',
-        'https://nguyencongpc.vn/media/product/250-27600-pc-gaming-i5-14600kf-ram-32g-rgb-vga-rtx-5070-12g-001.jpg',
-        'https://nguyencongpc.vn/media/product/250-27600-pc-gaming-i5-14600kf-ram-32g-rgb-vga-rtx-5070-12g-001.jpg',
-        'https://nguyencongpc.vn/media/product/250-26979-z6465930229541_3235e7f7abde51fda44d8f2dd562ff4a.jpg',
-        'https://nguyencongpc.vn/media/product/250-26979-z6465930229542_5112c8d6dbfbc568c587b3873723cb5f.jpg',
-    ],
-};
-
 function DetailPage() {
     const { id } = useParams();
     const [listRate, setListRate] = useState([]);
@@ -34,7 +22,7 @@ function DetailPage() {
 
     const mockImage = {
         pc: [
-            equipmentInfor.image_url, // Thay thế bằng URL hình ảnh của sản phẩ
+            equipmentInfor.urlImage, // Thay thế bằng URL hình ảnh của sản phẩ
             'https://nguyencongpc.vn/media/product/250-27600-pc-gaming-i5-14600kf-ram-32g-rgb-vga-rtx-5070-12g-005.jpg',
             'https://nguyencongpc.vn/media/product/250-27600-pc-gaming-i5-14600kf-ram-32g-rgb-vga-rtx-5070-12g-006.jpg',
             'https://nguyencongpc.vn/media/product/250-27600-pc-gaming-i5-14600kf-ram-32g-rgb-vga-rtx-5070-12g-003.jpg',
@@ -44,7 +32,7 @@ function DetailPage() {
             'https://nguyencongpc.vn/media/product/250-26979-z6465930229542_5112c8d6dbfbc568c587b3873723cb5f.jpg',
         ],
         cpu: [
-            equipmentInfor.image_url,
+            equipmentInfor.urlImage,
             'https://nguyencongpc.vn/media/product/250-23429-cpu-intel-core-i9-13900kf-1.jpg',
             'https://nguyencongpc.vn/media/product/250-23429-cpu-intel-core-i9-13900kf-2.jpg',
             'https://nguyencongpc.vn/media/product/250-23429-cpu-intel-core-i9-13900kf-3.jpg',
@@ -52,7 +40,7 @@ function DetailPage() {
             'https://nguyencongpc.vn/media/product/250-23429-cpu-intel-core-i9-13900kf-5.jpg',
         ],
         gpu: [
-            equipmentInfor.image_url,
+            equipmentInfor.urlImage,
             'https://nguyencongpc.vn/media/product/250-18699-colorful-igame-geforce-rtx-3060-ultra-w-oc-12g-v-5.jpg',
             'https://nguyencongpc.vn/media/product/250-18699-card-man-hinh-colorful-igame-geforce-rtx-3060-ultra-w-oc-12g-v.jpg',
             'https://nguyencongpc.vn/media/product/250-21173-card-do-hoa-gigabyte-radeon-rx-6600-eagle-8g-5.jpg',
@@ -60,7 +48,7 @@ function DetailPage() {
             'https://nguyencongpc.vn/media/product/250-18369-inno3d-geforce-rtx-3060-twin-x2-1.jpg',
         ],
         mainboard: [
-            equipmentInfor.image_url,
+            equipmentInfor.urlImage,
             'https://nguyencongpc.vn/media/product/250-25551-mai-board-z790-asrock-pg-lighning-wifi-15.jpg',
             'https://nguyencongpc.vn/media/product/250-25551-mai-board-z790-asrock-pg-lighning-wifi-5.jpg',
             'https://nguyencongpc.vn/media/product/250-25551-mai-board-z790-asrock-pg-lighning-wifi-23.jpg',
@@ -68,7 +56,7 @@ function DetailPage() {
             'https://nguyencongpc.vn/media/product/250-25551-mai-board-z790-asrock-pg-lighning-wifi-28.jpg',
         ],
         monitor: [
-            equipmentInfor.image_url,
+            equipmentInfor.urlImage,
             'https://nguyencongpc.vn/media/product/250-26969-vinh--28-.png',
             'https://nguyencongpc.vn/media/product/250-26969-vinh--29-.png',
             'https://nguyencongpc.vn/media/product/250-26969-vinh--30-.png',
@@ -76,7 +64,7 @@ function DetailPage() {
             'https://nguyencongpc.vn/media/product/250-24655-m--n-h--nh-philips-24m1n3200z-74-6.jpg',
         ],
         laptop: [
-            equipmentInfor.image_url,
+            equipmentInfor.urlImage,
             'https://nguyencongpc.vn/media/product/250-26267-47470_acer_gaming_nitro_v_anv15--5-.png',
             'https://nguyencongpc.vn/media/product/250-26267-47470_acer_gaming_nitro_v_anv15--2-.png',
             'https://nguyencongpc.vn/media/product/250-26267-47470_acer_gaming_nitro_v_anv15--1-.png',
@@ -84,7 +72,7 @@ function DetailPage() {
             'https://nguyencongpc.vn/media/product/250-26506-47728_laptop_gigabyte_g5_mf5_52v--2-.png',
         ],
         ssd: [
-            equipmentInfor.image_url,
+            equipmentInfor.urlImage,
             'https://nguyencongpc.vn/media/product/250-19221-ssd-samsung-980-500gb-3.jpg',
             'https://nguyencongpc.vn/media/product/250-19221-ssd-samsung-980-500gb-2.jpg',
             'https://nguyencongpc.vn/media/product/250-19221-ssd-samsung-980-500gb-1.jpg',
@@ -100,7 +88,7 @@ function DetailPage() {
         if (value === 'plus') {
             setQuantityChoose((prev) => prev + 1);
         } else if (value === 'minus') {
-            setQuantityChoose((prev) => (prev > 0 ? prev - 1 : 0));
+            setQuantityChoose((prev) => (prev > 1 ? prev - 1 : 1));
         }
     };
 
@@ -143,6 +131,7 @@ function DetailPage() {
 
     useEffect(() => {
         window.scrollTo(0, 0);
+        console.log('ID', id);
 
         const getEquipmentInfor = async () => {
             try {
@@ -150,7 +139,7 @@ function DetailPage() {
 
                 if (response.data) {
                     setEquipmentInfor(response.data);
-                    setImagePrimary(response.data.image_url);
+                    setImagePrimary(response.data.urlImage);
                 }
             } catch (err) {
                 console.log(err);
@@ -197,12 +186,12 @@ function DetailPage() {
 
     return (
         <div>
-            <div className="flex rounded-lg border bg-white px-4 py-6 shadow">
-                <div className="w-[400px] flex-1">
-                    <div className="flex items-center justify-center">
-                        <img src={ImagePrimary} alt="" className="h-[360px] w-3/5 object-contain" />
+            <div className="flex bg-white shadow px-4 py-6 border rounded-lg">
+                <div className="flex-1 w-[400px]">
+                    <div className="flex justify-center items-center">
+                        <img src={ImagePrimary} alt="" className="w-3/5 h-[360px] object-contain" />
                     </div>
-                    <div className="mx-auto mt-8 flex w-[90%] pb-4">
+                    <div className="flex mx-auto mt-8 pb-4 w-[90%]">
                         <Swiper spaceBetween={10} slidesPerView={5}>
                             {mockImage[equipmentInfor.type]?.map((item, index) => (
                                 <SwiperSlide key={index}>
@@ -211,7 +200,7 @@ function DetailPage() {
                                         onClick={() => {
                                             setImagePrimary(item);
                                         }}
-                                        className="flex size-[90px] items-center justify-center rounded-lg border border-[#b8b8b8] p-[1px]"
+                                        className="flex justify-center items-center p-[1px] border border-[#b8b8b8] rounded-lg size-[90px]"
                                     >
                                         <img src={item} alt="" className="rounded-lg" />
                                     </div>
@@ -221,9 +210,9 @@ function DetailPage() {
                     </div>
                 </div>
                 <div className="flex-1 pl-4">
-                    <h2 className="text-xl font-semibold text-black">{equipmentInfor.name || 'Tên sản phẩm'}</h2>
-                    <div className="mt-3 flex">
-                        <div className="mr-4 border-r-2 border-gray-600 pr-4 text-sm">
+                    <h2 className="font-semibold text-black text-xl">{equipmentInfor.name || 'Tên sản phẩm'}</h2>
+                    <div className="flex mt-3">
+                        <div className="mr-4 pr-4 border-gray-600 border-r-2 text-sm">
                             <span className="text-textColor2">Bảo hành: </span>
                             <span className="text-redColor">36 tháng</span>
                         </div>
@@ -238,72 +227,75 @@ function DetailPage() {
                         </div>
                     </div>
                     {/* flash sale */}
-                    <div className="flash_sale mt-4 flex h-[60px] items-center justify-between gap-4 overflow-hidden rounded-lg border-2 border-redColor pr-6">
-                        <div className="flex h-full items-center gap-2 bg-redColor px-4 py-2 text-white">
+                    <div className="flex justify-between items-center gap-4 mt-4 pr-6 border-2 border-redColor rounded-lg h-[60px] overflow-hidden flash_sale">
+                        <div className="flex items-center gap-2 bg-redColor px-4 py-2 h-full text-white">
                             <AiFillThunderbolt className="text-3xl" />
-                            <span className="flex-shrink-0 text-lg font-semibold">FLASH SALE</span>
+                            <span className="flex-shrink-0 font-semibold text-lg">FLASH SALE</span>
                         </div>
                         <div className="flex items-center gap-2">
-                            <div className="flex items-center justify-center rounded bg-[#2b3440] px-2 py-1 text-white">
+                            <div className="flex justify-center items-center bg-[#2b3440] px-2 py-1 rounded text-white">
                                 {String(flashSaleTime.seconds).padStart(2, '0')}
                             </div>
-                            <span className="text-lg font-bold">:</span>
-                            <div className="flex items-center justify-center rounded bg-[#2b3440] px-2 py-1 text-white">
+                            <span className="font-bold text-lg">:</span>
+                            <div className="flex justify-center items-center bg-[#2b3440] px-2 py-1 rounded text-white">
                                 {String(flashSaleTime.minutes).padStart(2, '0')}
                             </div>
-                            <span className="text-lg font-bold">:</span>
-                            <div className="flex items-center justify-center rounded bg-[#2b3440] px-2 py-1 text-white">
+                            <span className="font-bold text-lg">:</span>
+                            <div className="flex justify-center items-center bg-[#2b3440] px-2 py-1 rounded text-white">
                                 {String(flashSaleTime.hours).padStart(2, '0')}
                             </div>
                         </div>
-                        <div className="flex-shrink-0 flex-col justify-between rounded-lg text-sm">
+                        <div className="flex-col flex-shrink-0 justify-between rounded-lg text-sm">
                             <span className="text-textColor1">Còn 5/15 sản phẩm</span>
-                            <div className="mt-2 h-2 w-24 rounded-full bg-[#fecccc]">
-                                <div className="h-full w-1/3 rounded-full bg-[#ffb22f]"></div>
+                            <div className="bg-[#fecccc] mt-2 rounded-full w-24 h-2">
+                                <div className="bg-[#ffb22f] rounded-full w-1/3 h-full"></div>
                             </div>
                         </div>
                     </div>
 
-                    <div className="mt-6 flex items-center gap-4 rounded-xl border border-[#b8b8b8] bg-[#f7f9fb] p-4">
-                        <span className="text-3xl font-semibold text-redColor">
-                            {(equipmentInfor.price * (1 - equipmentInfor.discount / 100)).toLocaleString('vi-VN')}
+                    <div className="flex items-center gap-4 bg-[#f7f9fb] mt-6 p-4 border border-[#b8b8b8] rounded-xl">
+                        <span className="font-semibold text-redColor text-3xl">
+                            {(
+                                Math.ceil((equipmentInfor.price * (1 - equipmentInfor.discount / 100)) / 100000) *
+                                100000
+                            ).toLocaleString('vi-VN')}
                         </span>
                         <span className="text-textColor2 line-through">
                             {equipmentInfor?.price?.toLocaleString('vi-VN') || '0'}
                         </span>
-                        <span className="rounded-md border border-redColor px-4 py-1 text-sm text-redColor">
+                        <span className="px-4 py-1 border border-redColor rounded-md text-redColor text-sm">
                             {equipmentInfor.discount || 0}%
                         </span>
                     </div>
-                    <div className="z-0 mt-6 flex items-center gap-4">
+                    <div className="z-0 flex items-center gap-4 mt-6">
                         <p className="font-semibold">Số lượng:</p>
 
-                        <div className="flex max-w-[8rem] items-center">
+                        <div className="flex items-center max-w-[8rem]">
                             <button
                                 onClick={() => {
                                     handleQuantityChoose('minus');
                                 }}
-                                className="h-11 rounded-s-lg border border-gray-300 p-3 hover:bg-gray-100"
+                                className="hover:bg-gray-100 p-3 border border-gray-300 rounded-s-lg h-11"
                             >
                                 <FaMinus />
                             </button>
-                            <span className="flex h-11 w-20 items-center justify-center border border-x-0 border-gray-300 py-2.5 text-center text-gray-900 outline-none">
+                            <span className="flex justify-center items-center py-2.5 border border-gray-300 border-x-0 outline-none w-20 h-11 text-gray-900 text-center">
                                 {quantityChoose}
                             </span>
                             <button
                                 onClick={() => {
                                     handleQuantityChoose('plus');
                                 }}
-                                className="h-11 rounded-e-lg border border-gray-300 p-3 hover:bg-gray-100"
+                                className="hover:bg-gray-100 p-3 border border-gray-300 rounded-e-lg h-11"
                             >
                                 <FaPlus />
                             </button>
                         </div>
                     </div>
-                    <div className="mt-8 flex gap-4">
+                    <div className="flex gap-4 mt-8">
                         <button
                             onClick={handleAddToCart}
-                            className="w-1/2 rounded-lg border border-redColor py-2 text-redColor hover:shadow-inner hover:shadow-redColor"
+                            className="hover:shadow-inner hover:shadow-redColor py-2 border border-redColor rounded-lg w-1/2 text-redColor"
                         >
                             THÊM VÀO GIỎ HÀNG
                         </button>
@@ -315,37 +307,37 @@ function DetailPage() {
                                     JSON.stringify([{ ...equipmentInfor, quantity: quantityChoose }]),
                                 );
                             }}
-                            className="w-1/2 rounded-lg bg-redColor from-redColor to-[#e8d01e] text-white hover:bg-gradient-to-tr"
+                            className="bg-redColor hover:bg-gradient-to-tr from-redColor to-[#e8d01e] rounded-lg w-1/2 text-white"
                         >
                             MUA NGAY
                         </button>
                     </div>
                     <h3 className="mt-6 font-semibold text-textColor2">YÊN TÂM MUA HÀNG</h3>
-                    <ul className="mt-4 flex flex-wrap gap-x-16 gap-y-4">
-                        <li className="flex w-1/2 items-center gap-2">
-                            <GiTakeMyMoney className="text-2xl text-redColor" />
-                            <p className="text-sm text-textColor2">Cam kết giá tốt nhất thị trường.</p>
+                    <ul className="flex flex-wrap gap-x-16 gap-y-4 mt-4">
+                        <li className="flex items-center gap-2 w-1/2">
+                            <GiTakeMyMoney className="text-redColor text-2xl" />
+                            <p className="text-textColor2 text-sm">Cam kết giá tốt nhất thị trường.</p>
                         </li>
                         <li className="flex items-center gap-2">
-                            <MdOutlineFiberNew className="text-3xl text-redColor" />
-                            <p className="text-sm text-textColor2">Sản phẩm mới 100%.</p>
+                            <MdOutlineFiberNew className="text-redColor text-3xl" />
+                            <p className="text-textColor2 text-sm">Sản phẩm mới 100%.</p>
                         </li>
 
-                        <li className="flex w-1/2 items-center gap-2">
-                            <GiReceiveMoney className="text-2xl text-redColor" />
-                            <p className="text-sm text-textColor2">Hỗ trợ trả góp - Thủ tục nhanh gọn.</p>
+                        <li className="flex items-center gap-2 w-1/2">
+                            <GiReceiveMoney className="text-redColor text-2xl" />
+                            <p className="text-textColor2 text-sm">Hỗ trợ trả góp - Thủ tục nhanh gọn.</p>
                         </li>
                         <li className="flex items-center gap-2">
-                            <FaArrowsRotate className="text-2xl text-redColor" />
-                            <p className="text-sm text-textColor2">Lỗi 1 đổi 1 ngay lập tức.</p>
+                            <FaArrowsRotate className="text-redColor text-2xl" />
+                            <p className="text-textColor2 text-sm">Lỗi 1 đổi 1 ngay lập tức.</p>
                         </li>
                     </ul>
                 </div>
             </div>
-            <div className="mt-12 flex gap-4">
+            <div className="flex gap-4 mt-12">
                 <div className="w-3/5">
                     <Evaluation
-                        equipmenId={parseInt(id)}
+                        equipmenId={id}
                         listRate={listRate}
                         setListRate={setListRate}
                         getRateData={getRateData}
@@ -356,33 +348,33 @@ function DetailPage() {
                 </div>
             </div>
 
-            <div className="mt-12 flex flex-wrap justify-between">
-                <div className="flex flex-shrink-0 items-center rounded-lg border border-[#b8b8b8] bg-[#f7f9fb] p-4">
-                    <TbTruckDelivery className="mr-3 mt-1 text-[50px]" />
+            <div className="flex flex-wrap justify-between mt-12">
+                <div className="flex flex-shrink-0 items-center bg-[#f7f9fb] p-4 border border-[#b8b8b8] rounded-lg">
+                    <TbTruckDelivery className="mt-1 mr-3 text-[50px]" />
                     <div>
-                        <p className="text-sm font-semibold">CHÍNH SÁCH GIAO HÀNG</p>
-                        <p className="text-sm text-textColor2">Nhận và thanh toán tại nhà</p>
+                        <p className="font-semibold text-sm">CHÍNH SÁCH GIAO HÀNG</p>
+                        <p className="text-textColor2 text-sm">Nhận và thanh toán tại nhà</p>
                     </div>
                 </div>
-                <div className="flex flex-shrink-0 items-center rounded-lg border border-[#b8b8b8] bg-[#f7f9fb] p-4">
-                    <MdOutlineWifiProtectedSetup className="mr-3 mt-1 rotate-90 text-[46px]" />
+                <div className="flex flex-shrink-0 items-center bg-[#f7f9fb] p-4 border border-[#b8b8b8] rounded-lg">
+                    <MdOutlineWifiProtectedSetup className="mt-1 mr-3 text-[46px] rotate-90" />
                     <div>
-                        <p className="text-sm font-semibold">CHÍNH SÁCH GIAO HÀNG</p>
-                        <p className="text-sm text-textColor2">Nhận và thanh toán tại nhà</p>
+                        <p className="font-semibold text-sm">CHÍNH SÁCH GIAO HÀNG</p>
+                        <p className="text-textColor2 text-sm">Nhận và thanh toán tại nhà</p>
                     </div>
                 </div>
-                <div className="flex flex-shrink-0 items-center rounded-lg border border-[#b8b8b8] bg-[#f7f9fb] p-4">
-                    <GiMoneyStack className="mr-3 mt-1 text-[50px]" />
+                <div className="flex flex-shrink-0 items-center bg-[#f7f9fb] p-4 border border-[#b8b8b8] rounded-lg">
+                    <GiMoneyStack className="mt-1 mr-3 text-[50px]" />
                     <div>
-                        <p className="text-sm font-semibold">CHÍNH SÁCH GIAO HÀNG</p>
-                        <p className="text-sm text-textColor2">Nhận và thanh toán tại nhà</p>
+                        <p className="font-semibold text-sm">CHÍNH SÁCH GIAO HÀNG</p>
+                        <p className="text-textColor2 text-sm">Nhận và thanh toán tại nhà</p>
                     </div>
                 </div>
-                <div className="flex flex-shrink-0 items-center rounded-lg border border-[#b8b8b8] bg-[#f7f9fb] p-4">
+                <div className="flex flex-shrink-0 items-center bg-[#f7f9fb] p-4 border border-[#b8b8b8] rounded-lg">
                     <FaHeadphones className="mr-3 text-[40px]" />
                     <div>
-                        <p className="text-sm font-semibold">CHÍNH SÁCH GIAO HÀNG</p>
-                        <p className="text-sm text-textColor2">Nhận và thanh toán tại nhà</p>
+                        <p className="font-semibold text-sm">CHÍNH SÁCH GIAO HÀNG</p>
+                        <p className="text-textColor2 text-sm">Nhận và thanh toán tại nhà</p>
                     </div>
                 </div>
             </div>

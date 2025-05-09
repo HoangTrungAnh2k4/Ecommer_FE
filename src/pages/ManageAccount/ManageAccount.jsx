@@ -1,19 +1,13 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { FaUser } from 'react-icons/fa';
 import { BsMenuUp } from 'react-icons/bs';
-import pc from '../../../public/pc2.jpg';
-
-import { getEquipmentDetailAPI, getOrderAPI } from '../../api/userAPI';
 
 import RoleAdmin from './RoleAdmin';
 import RoleUSer from './RoleUser';
 import { useUser } from '../../components/hooks/UserContext';
 
-const avatr = 'https://nguyencongpc.vn/media/product/250-25318-custom.jpg';
-
 function ManageAccount() {
     const [activeTab, setActiveTab] = useState('account');
-    const [orders, setOrders] = useState([]);
 
     const tabs = [
         { id: 'account', label: 'Tài khoản', icon: <FaUser className="text-xl" /> },
@@ -21,55 +15,6 @@ function ManageAccount() {
     ];
 
     const { userInfo } = useUser();
-
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                // 1. Lấy danh sách order
-                const orderData = await getOrderAPI();
-
-                // 2. Lấy các equipment_id duy nhất
-                const uniqueIds = [...new Set(orderData.data.map((o) => o.equipment_id))];
-
-                // 3. Gọi getDetailEquipment cho từng equipment_id
-                const equipmentMap = {};
-                await Promise.all(
-                    uniqueIds.map(async (id) => {
-                        const detail = await getEquipmentDetailAPI(id);
-                        equipmentMap[id] = detail.data;
-                    }),
-                );
-
-                // 4. Gộp dữ liệu lại theo order_id
-                const grouped = orderData.data.reduce((acc, item) => {
-                    const detail = equipmentMap[item.equipment_id];
-                    const itemWithDetail = {
-                        ...detail,
-                        quantity: item.quantity,
-                    };
-
-                    const existing = acc.find((o) => o.order_id === item.order_id);
-                    if (existing) {
-                        existing.items.push(itemWithDetail);
-                    } else {
-                        acc.push({
-                            order_id: item.order_id,
-                            date: item.date,
-                            items: [itemWithDetail],
-                        });
-                    }
-
-                    return acc;
-                }, []);
-
-                setOrders(grouped);
-            } catch (err) {
-                console.error('Lỗi khi lấy đơn hàng hoặc thiết bị:', err);
-            }
-        };
-
-        fetchData();
-    }, []);
 
     return (
         <div className="container flex gap-20">
@@ -106,7 +51,7 @@ function ManageAccount() {
                             <input
                                 type="text"
                                 readOnly
-                                placeholder={userInfo?.name}
+                                placeholder={userInfo?.username}
                                 className="h-fit rounded-lg border px-4 py-2 text-sm outline-none"
                             />
                         </div>
@@ -120,12 +65,7 @@ function ManageAccount() {
                     </div>
                 </div>
             )}
-            {activeTab === 'history' &&
-                (userInfo?.role === 'admin' ? (
-                    <RoleAdmin orders={orders} userInfo={userInfo} />
-                ) : (
-                    <RoleUSer orders={orders} userInfo={userInfo} />
-                ))}
+            {activeTab === 'history' && (userInfo?.role === 'admin' ? <RoleAdmin /> : <RoleUSer />)}
         </div>
     );
 }

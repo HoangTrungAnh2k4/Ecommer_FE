@@ -25,18 +25,18 @@ function ItemCard({ item }) {
 
     // Hàm random 30% cơ hội hiển thị hotIcon
     function shouldShowHotIcon() {
-        return Math.random() < 0.4; // 30% xác suất
+        return Math.random() < 0.5;
     }
 
     return (
         <div
             id={item.id}
-            className="card flex w-56 cursor-pointer select-none flex-col rounded-md border bg-white p-2 px-3 shadow-md"
+            className="flex flex-col bg-white shadow-md p-2 px-3 border rounded-md w-56 cursor-pointer select-none card"
         >
-            {shouldShowHotIcon() && <img src={hotIcon} alt="hot" className="absolute right-9 top-0 z-10 w-[20px]" />}
+            {shouldShowHotIcon() && <img src={hotIcon} alt="hot" className="top-0 right-9 z-10 absolute w-[20px]" />}
 
             <img
-                src={item?.image || noImage}
+                src={item?.urlImage || noImage}
                 alt={item.name}
                 draggable="false"
                 onClick={() => navigate(`/detail/${item.id}`)}
@@ -46,19 +46,19 @@ function ItemCard({ item }) {
             <div className="my-2 h-[25px]">
                 {Boolean(item.best_seller) && <img src={bestSale} alt="" className="w-[70px]" />}
             </div>
-            <div className="flex flex-grow flex-col">
-                <h2 onClick={() => navigate('/detail')} className="line-clamp-3 h-[72px] hover:text-blue-600">
+            <div className="flex flex-col flex-grow">
+                <h2 onClick={() => navigate('/detail')} className="h-[72px] hover:text-blue-600 line-clamp-3">
                     {item?.name}
                 </h2>
 
-                <div className="mt-auto flex items-center gap-4">
-                    <p className="text-sm text-textColor2 line-through">{item.price?.toLocaleString('vi-VN')}</p>
-                    <div className="rounded-lg bg-redColor px-2 py-[2px] text-sm text-white">
+                <div className="flex items-center gap-4 mt-auto">
+                    <p className="text-textColor2 text-sm line-through">{item.price?.toLocaleString('vi-VN')}</p>
+                    <div className="bg-redColor px-2 py-[2px] rounded-lg text-white text-sm">
                         {item?.discount || 0}%
                     </div>
                 </div>
 
-                <div className="mt-2 text-xl font-semibold text-redColor">
+                <div className="mt-2 font-semibold text-redColor text-xl">
                     {(Math.ceil((item.price * (1 - item.discount / 100)) / 100000) * 100000).toLocaleString('vi-VN')}
                 </div>
             </div>
@@ -67,7 +67,7 @@ function ItemCard({ item }) {
                 <p className="font-semibold text-textColor1">Đã bán:</p>
                 <span className="">{item?.sold_quantity}</span>
                 {item?.role === 'admin' && (
-                    <button onClick={handleDeleteProduct} className="btn ml-auto">
+                    <button onClick={handleDeleteProduct} className="ml-auto btn">
                         Xóa
                     </button>
                 )}

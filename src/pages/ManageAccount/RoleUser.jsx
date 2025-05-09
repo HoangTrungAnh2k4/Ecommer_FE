@@ -1,7 +1,5 @@
 import { useEffect, useState } from 'react';
-import { getEquipmentDetailAPI, getOrderAPI } from '../../api/userAPI';
-
-const avatr = 'https://nguyencongpc.vn/media/product/250-25318-custom.jpg';
+import { getOrderAPI } from '../../api/userAPI';
 
 function RoleUSer() {
     const [orders, setOrders] = useState([]);
@@ -17,7 +15,11 @@ function RoleUSer() {
         return `${hours}:${minutes} ${day}/${month}/${year} `;
     };
 
-    const getTotalPrice = (items) => {
+    const getTotalPrice = (order) => {
+        const items = order.map((item) => ({
+            price: item.equipment_id.price,
+            quantity: item.quantity,
+        }));
         return items.reduce((acc, item) => {
             return acc + item.price * item.quantity;
         }, 0);
@@ -26,44 +28,9 @@ function RoleUSer() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                // 1. Lấy danh sách order
                 const orderData = await getOrderAPI();
 
-                // 2. Lấy các equipment_id duy nhất
-                const uniqueIds = [...new Set(orderData.data.map((o) => o.equipment_id))];
-
-                // 3. Gọi getDetailEquipment cho từng equipment_id
-                const equipmentMap = {};
-                await Promise.all(
-                    uniqueIds.map(async (id) => {
-                        const detail = await getEquipmentDetailAPI(id);
-                        equipmentMap[id] = detail.data;
-                    }),
-                );
-
-                // 4. Gộp dữ liệu lại theo order_id
-                const grouped = orderData.data.reduce((acc, item) => {
-                    const detail = equipmentMap[item.equipment_id];
-                    const itemWithDetail = {
-                        ...detail,
-                        quantity: item.quantity,
-                    };
-
-                    const existing = acc.find((o) => o.order_id === item.order_id);
-                    if (existing) {
-                        existing.items.push(itemWithDetail);
-                    } else {
-                        acc.push({
-                            order_id: item.order_id,
-                            date: item.date,
-                            items: [itemWithDetail],
-                        });
-                    }
-
-                    return acc;
-                }, []);
-
-                setOrders(grouped);
+                setOrders(orderData.data);
             } catch (err) {
                 console.error('Lỗi khi lấy đơn hàng hoặc thiết bị:', err);
             }
@@ -74,8 +41,8 @@ function RoleUSer() {
 
     if (orders.length === 0) {
         return (
-            <div className="flex h-fit justify-center rounded-lg border bg-white px-6 py-3">
-                <p className="text-xl font-semibold">Chưa có đơn hàng nào</p>
+            <div className="flex justify-center bg-white px-6 py-3 border rounded-lg h-fit">
+                <p className="font-semibold text-xl">Chưa có đơn hàng nào</p>
             </div>
         );
     }
@@ -83,38 +50,43 @@ function RoleUSer() {
     console.log(orders);
 
     return (
-        <div className="flex gap-20">
+        <div className="flex gap-20 w-[60%]">
             <ul className="w-full">
-                {orders.length != 0 &&
+                {orders?.length != 0 &&
                     orders?.map((item, index) => {
                         return (
                             <li
                                 key={index}
-                                className="mb-6 justify-between rounded-lg border bg-white px-8 py-4 shadow"
+                                className="justify-between bg-white shadow mb-6 px-8 py-4 border rounded-lg"
                             >
                                 <div className="flex justify-between text-textColor2">
-                                    <p className="border-b-2 border-gray-100 pb-1">#{item.order_id}</p>
+                                    <p className="pb-1 border-gray-100 border-b-2">#{item._id}</p>
                                     <p className="text-sm">{formatDate(item.date)}</p>
                                 </div>
-                                {item.items.length != 0 &&
-                                    item.items?.map((item2, index) => {
+                                {console.log(item.equipmentList)}
+                                {item.equipmentList != 0 &&
+                                    item.equipmentList.map((equipment, index) => {
                                         return (
                                             <div
                                                 key={index}
-                                                className="justify-between border-b-2 border-gray-200 py-6"
+                                                className="justify-between py-6 border-gray-200 border-b-2"
                                             >
                                                 <div className="flex gap-4">
                                                     <img
-                                                        src={item2.image_url}
+                                                        src={equipment.equipment_id.urlImage}
                                                         alt=""
-                                                        className="size-[120px] object-cover object-center"
+                                                        className="size-[120px] object-center object-cover"
                                                     />
                                                     <div className="w-full">
-                                                        <p className="font-semibold text-textColor2">{item2.name}</p>
-                                                        <div className="mt-6 flex justify-between">
-                                                            <p className="text-sm text-textColor2">x{item2.quantity}</p>
+                                                        <p className="font-semibold text-textColor2">
+                                                            {equipment.equipment_id.name}
+                                                        </p>
+                                                        <div className="flex justify-between mt-6">
+                                                            <p className="text-textColor2 text-sm">
+                                                                x {equipment.quantity}
+                                                            </p>
                                                             <p className="font-semibold text-redColor">
-                                                                {item2.price?.toLocaleString('vi-VN')}
+                                                                {equipment.equipment_id.price?.toLocaleString('vi-VN')}
                                                             </p>
                                                         </div>
                                                     </div>
@@ -122,11 +94,10 @@ function RoleUSer() {
                                             </div>
                                         );
                                     })}
-
-                                <div className="mt-4 flex items-center justify-end gap-4">
-                                    <p className="text-sm text-textColor2">Thành tiền:</p>
+                                <div className="flex justify-end items-center gap-4 mt-4">
+                                    <p className="text-textColor2 text-sm">Thành tiền:</p>
                                     <p className="font-semibold text-redColor">
-                                        {getTotalPrice(item.items)?.toLocaleString('vi-VN')}
+                                        {getTotalPrice(item.equipmentList)?.toLocaleString('vi-VN')}
                                     </p>
                                 </div>
                             </li>
