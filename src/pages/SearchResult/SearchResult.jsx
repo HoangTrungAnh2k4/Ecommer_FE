@@ -51,8 +51,6 @@ function SearchResult() {
     };
 
     useEffect(() => {
-        toast.success(`Tìm thấysản phẩm cho từ khóa "${keyword}"`);
-
         setCurrentPage(1);
     }, [keyword]);
 
@@ -86,9 +84,9 @@ function SearchResult() {
 
     return (
         <div className="container">
-            <div className="bg-white mt-6 border rounded-lg">
-                <div className="flex p-4 border-gray-300 border-b">
-                    <p className="flex-shrink-0 mr-6 w-fit font-semibold text-sm">Khoảng giá:</p>
+            <div className="mt-6 rounded-lg border bg-white">
+                <div className="flex border-b border-gray-300 p-4">
+                    <p className="mr-6 w-fit flex-shrink-0 text-sm font-semibold">Khoảng giá:</p>
                     <ul className="flex flex-wrap gap-4">
                         {priceRanges.map((range, index) => {
                             const isSelected = priceRange?.min === range.min && priceRange?.max === range.max;
@@ -108,14 +106,14 @@ function SearchResult() {
                     </ul>
                 </div>
                 <div className="flex p-4">
-                    <p className="flex-shrink-0 mr-6 w-fit font-semibold text-sm">Chọn theo tiêu chí:</p>
+                    <p className="mr-6 w-fit flex-shrink-0 text-sm font-semibold">Chọn theo tiêu chí:</p>
                     <ul className="flex flex-wrap gap-4"></ul>
                 </div>
             </div>
 
-            <div className="bg-white mt-6 p-4 border rounded-lg">
+            <div className="mt-6 rounded-lg border bg-white p-4">
                 {/* filter */}
-                <div className="inline-flex gap-4 w-full">
+                <div className="inline-flex w-full gap-4">
                     <div
                         onClick={() => {
                             setSortBy('asc');
@@ -141,13 +139,13 @@ function SearchResult() {
                         onClick={() => {
                             removeFilter();
                         }}
-                        className="flex items-center gap-2 bg-[#f8f8f8] hover:shadow-gray-400 hover:shadow-inner px-[10px] py-2 border rounded-lg w-fit text-[#515151] text-sm cursor-pointer"
+                        className="flex w-fit cursor-pointer items-center gap-2 rounded-lg border bg-[#f8f8f8] px-[10px] py-2 text-sm text-[#515151] hover:shadow-inner hover:shadow-gray-400"
                     >
                         <p>Bỏ filter</p>
                     </div>
                 </div>
 
-                <div className="flex flex-wrap gap-2 mt-6">
+                <div className="mt-6 flex flex-wrap gap-2">
                     {searchResult.length === 0 ? (
                         <img
                             src="https://grgarments.in/images/product-not-found.png"
@@ -172,7 +170,7 @@ function SearchResult() {
                         ))
                     )}
                 </div>
-                <div className="justify-items-center mt-6">
+                <div className="mt-6 justify-items-center">
                     <Pagination
                         current={currentPage}
                         total={totalPage}
