@@ -9,7 +9,7 @@ import { FaSignOutAlt } from 'react-icons/fa';
 import { FaUser } from 'react-icons/fa6';
 
 function HeaderPage() {
-    const avatr = 'https://cdn.kona-blue.com/upload/kona-blue_com/post/images/2024/09/18/457/avatar-mac-dinh-12.jpg';
+    const avatr = 'https://www.rophim.me/images//avatars/pack1/14.jpg';
     const navigation = useNavigate();
 
     const handleLogout = () => {
@@ -21,6 +21,7 @@ function HeaderPage() {
     const handleSearch = (e) => {
         e.preventDefault();
         navigation(`/search-result?search=${e.target.value}`);
+        e.target.value = '';
     };
 
     const items = [
@@ -77,7 +78,7 @@ function HeaderPage() {
             </div>
 
             <div className="flex items-center gap-6">
-                <div className="group before:top-0 before:absolute relative before:inset-x-0 before:h-[130%] before:content-['']">
+                <div className="group before:top-0 before:-right-5 before:absolute relative before:w-[100px] before:h-[130%] before:content-['']">
                     <IoCart className="hover:bg-white my-auto p-1 rounded-full text-[2.5rem] cursor-pointer" />
                     <Cart />
                 </div>
@@ -85,7 +86,11 @@ function HeaderPage() {
                 <Dropdown menu={{ items }} trigger={['click']} placement="bottomRight">
                     <a onClick={(e) => e.preventDefault()} className="cursor-pointer">
                         <Space>
-                            <img src={avatr} alt="" className="rounded-full size-11 object-center object-cover" />
+                            <img
+                                src={avatr}
+                                alt=""
+                                className="border rounded-full size-11 object-center object-cover"
+                            />
                         </Space>
                     </a>
                 </Dropdown>

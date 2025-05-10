@@ -19,6 +19,13 @@ function DetailPage() {
     const [equipmentInfor, setEquipmentInfor] = useState({});
     const [quantityChoose, setQuantityChoose] = useState(1);
     const [ImagePrimary, setImagePrimary] = useState('');
+    const [flashSaleTime, setFlashSaleTime] = useState({
+        days: 0,
+        hours: 0,
+        minutes: 0,
+        seconds: 0,
+    });
+    const [isLoading, setIsLoading] = useState(true);
 
     const mockImage = {
         pc: [
@@ -131,7 +138,6 @@ function DetailPage() {
 
     useEffect(() => {
         window.scrollTo(0, 0);
-        console.log('ID', id);
 
         const getEquipmentInfor = async () => {
             try {
@@ -140,6 +146,7 @@ function DetailPage() {
                 if (response.data) {
                     setEquipmentInfor(response.data);
                     setImagePrimary(response.data.urlImage);
+                    setIsLoading(false);
                 }
             } catch (err) {
                 console.log(err);
@@ -149,14 +156,6 @@ function DetailPage() {
         getRateData();
         getEquipmentInfor();
     }, [id]);
-
-    // Add these states near the top of the component with other useState declarations
-    const [flashSaleTime, setFlashSaleTime] = useState({
-        days: 0,
-        hours: 0,
-        minutes: 0,
-        seconds: 0,
-    });
 
     // Add this useEffect after your existing useEffect
     useEffect(() => {
@@ -189,7 +188,13 @@ function DetailPage() {
             <div className="flex bg-white shadow px-4 py-6 border rounded-lg">
                 <div className="flex-1 w-[400px]">
                     <div className="flex justify-center items-center">
-                        <img src={ImagePrimary} alt="" className="w-3/5 h-[360px] object-contain" />
+                        {isLoading ? (
+                            <div className="flex justify-center items-center w-full h-[200px]">
+                                <div className="border-4 border-yellow-600 border-t-transparent rounded-full w-16 h-16 animate-spin" />
+                            </div>
+                        ) : (
+                            <img src={ImagePrimary} alt="" className="w-3/5 h-[360px] object-contain" />
+                        )}
                     </div>
                     <div className="flex mx-auto mt-8 pb-4 w-[90%]">
                         <Swiper spaceBetween={10} slidesPerView={5}>

@@ -10,8 +10,6 @@ import { GiMoneyStack } from 'react-icons/gi';
 import { MdOutlineWifiProtectedSetup } from 'react-icons/md';
 import { TbTruckDelivery } from 'react-icons/tb';
 
-const list = new Array(10).fill(0);
-
 function HomePage() {
     const [listCPU, setListCPU] = useState([]);
     const [listGPU, setListGPU] = useState([]);
@@ -20,6 +18,7 @@ function HomePage() {
     const [listMonitor, setListMonitor] = useState([]);
     const [listLaptop, setListLaptop] = useState([]);
     const [listPC, setListPC] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const fetchListBestSeller = async () => {
@@ -41,6 +40,7 @@ function HomePage() {
                 if (monitorRes.status === 'fulfilled') setListMonitor(monitorRes.value.data);
                 if (laptopRes.status === 'fulfilled') setListLaptop(laptopRes.value.data);
                 if (pcRes.status === 'fulfilled') setListPC(pcRes.value.data);
+                setLoading(false);
             } catch (error) {
                 console.error(error);
             }
@@ -49,139 +49,168 @@ function HomePage() {
     }, []);
 
     return (
-        <div className="ư- container mx-auto">
-            <div className="fixed left-0 z-50 w-[120px] animate-bounce">
-                <img
-                    src="https://nguyencongpc.vn/media/banner/27_Marbdc870976385c05318ea36291d1c6f4b.webp"
-                    alt="Left banner"
-                    className="h-auto w-full object-contain"
-                />
-            </div>
-
-            <div className="fixed right-0 z-50 w-[120px] animate-bounce">
-                <img
-                    src="https://nguyencongpc.vn/media/banner/27_Mar40eaff2956861bc5a66a363e56b8ef71.webp"
-                    alt="Right banner"
-                    className="h-auto w-full object-contain"
-                />
-            </div>
-            <div className="mb-6 h-[280px] w-full overflow-hidden rounded-xl">
+        <div className="mx-auto ư- container">
+            <div className="mb-6 rounded-xl w-full h-[280px] overflow-hidden">
                 <img
                     src="https://nguyencongpc.vn/media/banner/17_Apre2a8f86ab726d7530efb2ff71335b32d.webp"
                     alt=""
-                    className="w-fit bg-red-300 object-contain object-center"
+                    className="bg-red-300 w-fit object-center object-contain"
                 />
             </div>
 
             <Banner />
 
-            <h1 className="mb-6 mt-12 text-xl font-semibold text-textColor1">DANH MỤC NỔI BẬT</h1>
+            <h1 className="mt-12 mb-6 font-semibold text-textColor1 text-xl">DANH MỤC NỔI BẬT</h1>
             <Category className="" />
 
-            <div className="mb-6 mt-12 flex items-center justify-between">
-                <h1 className="block pt-[2px] text-xl font-semibold text-textColor1">PC THEO NHU CẦU</h1>
+            <div className="flex justify-between items-center mt-12 mb-6">
+                <h1 className="block pt-[2px] font-semibold text-textColor1 text-xl">PC THEO NHU CẦU</h1>
                 <Link
                     to={'/list-product/pc'}
-                    className="rounded-lg border px-2 py-1 hover:border-redColor hover:text-redColor"
+                    className="px-2 py-1 border hover:border-redColor rounded-lg hover:text-redColor"
                 >
                     Xem tất cả
                 </Link>
             </div>
-            <Slider list={listPC} />
 
-            <div className="mb-6 mt-12 flex items-center justify-between">
-                <h1 className="pt-[2px] text-xl font-semibold text-textColor1">CPU - BỘ VI XỬ LÝ</h1>
-                <Link
-                    to={'/list-product/cpu'}
-                    className="rounded-lg border px-2 py-1 hover:border-redColor hover:text-redColor"
-                >
-                    Xem tất cả
-                </Link>
-            </div>
-            <Slider list={listCPU} />
+            {loading ? (
+                <div className="flex justify-center items-center w-full">
+                    <div className="border-4 border-yellow-600 border-t-transparent rounded-full w-16 h-16 animate-spin" />
+                </div>
+            ) : (
+                <Slider list={listPC} />
+            )}
 
-            <div className="mb-6 mt-12 flex items-center justify-between">
-                <h1 className="pt-[2px] text-xl font-semibold text-textColor1">VGA - CARD MÀN HÌNH</h1>
+            <div className="flex justify-between items-center mt-12 mb-6">
+                <h1 className="pt-[2px] font-semibold text-textColor1 text-xl">VGA - CARD MÀN HÌNH</h1>
                 <Link
                     to={'/list-product/gpu'}
-                    className="rounded-lg border px-2 py-1 hover:border-redColor hover:text-redColor"
+                    className="px-2 py-1 border hover:border-redColor rounded-lg hover:text-redColor"
                 >
                     Xem tất cả
                 </Link>
             </div>
-            <Slider list={listGPU} />
+            {loading ? (
+                <div className="flex justify-center items-center w-full">
+                    <div className="border-4 border-yellow-600 border-t-transparent rounded-full w-16 h-16 animate-spin" />
+                </div>
+            ) : (
+                <Slider list={listGPU} />
+            )}
 
-            <div className="mb-6 mt-12 flex items-center justify-between">
-                <h1 className="pt-[2px] text-xl font-semibold text-textColor1">MAINBOARD - BO MẠCH CHỦ</h1>
+            <div className="flex justify-between items-center mt-12 mb-6">
+                <h1 className="pt-[2px] font-semibold text-textColor1 text-xl">CPU - BỘ VI XỬ LÝ</h1>
+                <Link
+                    to={'/list-product/cpu'}
+                    className="px-2 py-1 border hover:border-redColor rounded-lg hover:text-redColor"
+                >
+                    Xem tất cả
+                </Link>
+            </div>
+
+            {loading ? (
+                <div className="flex justify-center items-center w-full">
+                    <div className="border-4 border-yellow-600 border-t-transparent rounded-full w-16 h-16 animate-spin" />
+                </div>
+            ) : (
+                <Slider list={listCPU} />
+            )}
+
+            <div className="flex justify-between items-center mt-12 mb-6">
+                <h1 className="pt-[2px] font-semibold text-textColor1 text-xl">MAINBOARD - BO MẠCH CHỦ</h1>
                 <Link
                     to={'/list-product/mainboard'}
-                    className="rounded-lg border px-2 py-1 hover:border-redColor hover:text-redColor"
+                    className="px-2 py-1 border hover:border-redColor rounded-lg hover:text-redColor"
                 >
                     Xem tất cả
                 </Link>
             </div>
-            <Slider list={listMainboard} />
+            {loading ? (
+                <div className="flex justify-center items-center w-full">
+                    <div className="border-4 border-yellow-600 border-t-transparent rounded-full w-16 h-16 animate-spin" />
+                </div>
+            ) : (
+                <Slider list={listMainboard} />
+            )}
 
-            <div className="mb-6 mt-12 flex items-center justify-between">
-                <h1 className="pt-[2px] text-xl font-semibold text-textColor1">MÀN HÌNH</h1>
+            <div className="flex justify-between items-center mt-12 mb-6">
+                <h1 className="pt-[2px] font-semibold text-textColor1 text-xl">MÀN HÌNH</h1>
                 <Link
                     to={'/list-product/monitor'}
-                    className="rounded-lg border px-2 py-1 hover:border-redColor hover:text-redColor"
+                    className="px-2 py-1 border hover:border-redColor rounded-lg hover:text-redColor"
                 >
                     Xem tất cả
                 </Link>
             </div>
-            <Slider list={listMonitor} />
+            {loading ? (
+                <div className="flex justify-center items-center w-full">
+                    <div className="border-4 border-yellow-600 border-t-transparent rounded-full w-16 h-16 animate-spin" />
+                </div>
+            ) : (
+                <Slider list={listMonitor} />
+            )}
 
-            <div className="mb-6 mt-12 flex items-center justify-between">
-                <h1 className="pt-[2px] text-xl font-semibold text-textColor1">LAPTOP</h1>
+            <div className="flex justify-between items-center mt-12 mb-6">
+                <h1 className="pt-[2px] font-semibold text-textColor1 text-xl">LAPTOP</h1>
                 <Link
                     to={'/list-product/laptop'}
-                    className="rounded-lg border px-2 py-1 hover:border-redColor hover:text-redColor"
+                    className="px-2 py-1 border hover:border-redColor rounded-lg hover:text-redColor"
                 >
                     Xem tất cả
                 </Link>
             </div>
-            <Slider list={listLaptop} />
+            {loading ? (
+                <div className="flex justify-center items-center w-full">
+                    <div className="border-4 border-yellow-600 border-t-transparent rounded-full w-16 h-16 animate-spin" />
+                </div>
+            ) : (
+                <Slider list={listLaptop} />
+            )}
 
-            <div className="mb-6 mt-12 flex items-center justify-between">
-                <h1 className="pt-[2px] text-xl font-semibold text-textColor1">SSD</h1>
+            <div className="flex justify-between items-center mt-12 mb-6">
+                <h1 className="pt-[2px] font-semibold text-textColor1 text-xl">SSD</h1>
                 <Link
                     to={'/list-product/ssd'}
-                    className="rounded-lg border px-2 py-1 hover:border-redColor hover:text-redColor"
+                    className="px-2 py-1 border hover:border-redColor rounded-lg hover:text-redColor"
                 >
                     Xem tất cả
                 </Link>
             </div>
-            <Slider list={listSSD} />
+            {loading ? (
+                <div className="flex justify-center items-center w-full">
+                    <div className="border-4 border-yellow-600 border-t-transparent rounded-full w-16 h-16 animate-spin" />
+                </div>
+            ) : (
+                <Slider list={listSSD} />
+            )}
 
-            <div className="mt-12 flex flex-wrap justify-between">
-                <div className="flex flex-shrink-0 items-center rounded-lg border border-[#b8b8b8] bg-white p-4">
-                    <TbTruckDelivery className="mr-3 mt-1 text-[50px]" />
+            <div className="flex flex-wrap justify-between mt-12">
+                <div className="flex flex-shrink-0 items-center bg-white p-4 border border-[#b8b8b8] rounded-lg">
+                    <TbTruckDelivery className="mt-1 mr-3 text-[50px]" />
                     <div>
-                        <p className="text-sm font-semibold">CHÍNH SÁCH GIAO HÀNG</p>
-                        <p className="text-sm text-textColor2">Nhận và thanh toán tại nhà</p>
+                        <p className="font-semibold text-sm">CHÍNH SÁCH GIAO HÀNG</p>
+                        <p className="text-textColor2 text-sm">Nhận và thanh toán tại nhà</p>
                     </div>
                 </div>
-                <div className="flex flex-shrink-0 items-center rounded-lg border border-[#b8b8b8] bg-white p-4">
-                    <MdOutlineWifiProtectedSetup className="mr-3 mt-1 rotate-90 text-[46px]" />
+                <div className="flex flex-shrink-0 items-center bg-white p-4 border border-[#b8b8b8] rounded-lg">
+                    <MdOutlineWifiProtectedSetup className="mt-1 mr-3 text-[46px] rotate-90" />
                     <div>
-                        <p className="text-sm font-semibold">CHÍNH SÁCH GIAO HÀNG</p>
-                        <p className="text-sm text-textColor2">Nhận và thanh toán tại nhà</p>
+                        <p className="font-semibold text-sm">CHÍNH SÁCH GIAO HÀNG</p>
+                        <p className="text-textColor2 text-sm">Nhận và thanh toán tại nhà</p>
                     </div>
                 </div>
-                <div className="flex flex-shrink-0 items-center rounded-lg border border-[#b8b8b8] bg-white p-4">
-                    <GiMoneyStack className="mr-3 mt-1 text-[50px]" />
+                <div className="flex flex-shrink-0 items-center bg-white p-4 border border-[#b8b8b8] rounded-lg">
+                    <GiMoneyStack className="mt-1 mr-3 text-[50px]" />
                     <div>
-                        <p className="text-sm font-semibold">CHÍNH SÁCH GIAO HÀNG</p>
-                        <p className="text-sm text-textColor2">Nhận và thanh toán tại nhà</p>
+                        <p className="font-semibold text-sm">CHÍNH SÁCH GIAO HÀNG</p>
+                        <p className="text-textColor2 text-sm">Nhận và thanh toán tại nhà</p>
                     </div>
                 </div>
-                <div className="flex flex-shrink-0 items-center rounded-lg border border-[#b8b8b8] bg-white p-4">
+                <div className="flex flex-shrink-0 items-center bg-white p-4 border border-[#b8b8b8] rounded-lg">
                     <FaHeadphones className="mr-3 text-[40px]" />
                     <div>
-                        <p className="text-sm font-semibold">CHÍNH SÁCH GIAO HÀNG</p>
-                        <p className="text-sm text-textColor2">Nhận và thanh toán tại nhà</p>
+                        <p className="font-semibold text-sm">CHÍNH SÁCH GIAO HÀNG</p>
+                        <p className="text-textColor2 text-sm">Nhận và thanh toán tại nhà</p>
                     </div>
                 </div>
             </div>

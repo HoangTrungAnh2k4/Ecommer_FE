@@ -41,13 +41,11 @@ function RoleUSer() {
 
     if (orders.length === 0) {
         return (
-            <div className="flex justify-center bg-white px-6 py-3 border rounded-lg h-fit">
-                <p className="font-semibold text-xl">Chưa có đơn hàng nào</p>
+            <div className="flex justify-center items-center w-full">
+                <div className="border-4 border-yellow-600 border-t-transparent rounded-full w-16 h-16 animate-spin" />
             </div>
         );
     }
-
-    console.log(orders);
 
     return (
         <div className="flex gap-20 w-[60%]">
@@ -63,7 +61,6 @@ function RoleUSer() {
                                     <p className="pb-1 border-gray-100 border-b-2">#{item._id}</p>
                                     <p className="text-sm">{formatDate(item.date)}</p>
                                 </div>
-                                {console.log(item.equipmentList)}
                                 {item.equipmentList != 0 &&
                                     item.equipmentList.map((equipment, index) => {
                                         return (

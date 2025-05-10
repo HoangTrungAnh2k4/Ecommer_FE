@@ -6,8 +6,11 @@ import { FaStar } from 'react-icons/fa';
 import { deleteRateAPI } from './../../api/adminAPI';
 
 import { toast } from 'react-toastify';
+import { useUser } from '../../components/hooks/UserContext';
 
 function QandA({ listRate, setListRate }) {
+    const { user } = useUser();
+
     const formatDate = (date) => {
         const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
         return new Date(date).toLocaleDateString('vi-VN', options);
@@ -62,14 +65,16 @@ function QandA({ listRate, setListRate }) {
                                         Trả lời
                                     </span>
                                 </button>
-                                <button
-                                    onClick={() => {
-                                        handleDeleteRate(item._id);
-                                    }}
-                                    className="flex items-center gap-1 bg-white hover:bg-red-600 mt-2 px-4 py-1 border border-red-600 rounded-lg text-red-600 hover:text-white"
-                                >
-                                    <span className="font-semibold">Xóa</span>
-                                </button>
+                                {user?.role === 'admin' && (
+                                    <button
+                                        onClick={() => {
+                                            handleDeleteRate(item._id);
+                                        }}
+                                        className="flex items-center gap-1 bg-white hover:bg-red-600 mt-2 px-4 py-1 border border-red-600 rounded-lg text-red-600 hover:text-white"
+                                    >
+                                        <span className="font-semibold">Xóa</span>
+                                    </button>
+                                )}
                             </div>
                         </div>
                     </div>

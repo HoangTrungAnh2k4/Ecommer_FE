@@ -42,32 +42,45 @@ function Evaluation({ equipmenId, listRate, getRateData, setListRate }) {
         }
     };
 
-    const handleDataRate = () => {
-        if (!listRate) return;
-        if (!Array.isArray(listRate)) {
-            console.log('listRate is not an array');
-            return;
-        }
+    const getWidthBar = (value) => {
+        console.log(value);
 
-        let totalRate = 0;
-        const result = {
-            1: 0,
-            2: 0,
-            3: 0,
-            4: 0,
-            5: 0,
-        };
+        const total = listRate.length;
 
-        listRate.forEach((item) => {
-            totalRate += item.value;
-            result[item.value] += 1;
-        });
+        const count = listRateEachStar[value];
 
-        setlistRateEachStar(result);
-        setAvgRate(totalRate / listRate.length);
+        if (count === 0) return '0%';
+
+        const width = (count / total) * 100;
+
+        return toString(width) + '%';
     };
 
     useEffect(() => {
+        const handleDataRate = () => {
+            if (!listRate) return;
+            if (!Array.isArray(listRate)) {
+                console.log('listRate is not an array');
+                return;
+            }
+
+            let totalRate = 0;
+            const result = {
+                1: 0,
+                2: 0,
+                3: 0,
+                4: 0,
+                5: 0,
+            };
+
+            listRate.forEach((item) => {
+                totalRate += item.value;
+                result[item.value] += 1;
+            });
+
+            setlistRateEachStar(result);
+            setAvgRate(totalRate / listRate.length);
+        };
         handleDataRate();
     }, [listRate]);
 
@@ -89,7 +102,10 @@ function Evaluation({ equipmenId, listRate, getRateData, setListRate }) {
                                 <span>5</span>
                                 <FaStar className="text-yellow-400 text-2xl" />
                                 <div className="bg-gray-200 dark:bg-gray-700 mx-2 rounded-full w-full h-2.5">
-                                    <div className="bg-blue-600 rounded-full h-2.5" style={{ width: '45%' }}></div>
+                                    <div
+                                        className="bg-blue-600 rounded-full h-2.5"
+                                        style={{ width: getWidthBar(5) }}
+                                    ></div>
                                 </div>
                                 <p className="flex-shrink-0 text-sm">{listRateEachStar[5]} đánh giá</p>
                             </li>
@@ -97,7 +113,10 @@ function Evaluation({ equipmenId, listRate, getRateData, setListRate }) {
                                 <span>4</span>
                                 <FaStar className="text-yellow-400 text-2xl" />
                                 <div className="bg-gray-200 dark:bg-gray-700 mx-2 rounded-full w-full h-2.5">
-                                    <div className="bg-blue-600 rounded-full h-2.5" style={{ width: '45%' }}></div>
+                                    <div
+                                        className="bg-blue-600 rounded-full h-2.5"
+                                        style={{ width: getWidthBar(4) }}
+                                    ></div>
                                 </div>
                                 <p className="flex-shrink-0 text-sm">{listRateEachStar[4]} đánh giá</p>
                             </li>
@@ -105,7 +124,10 @@ function Evaluation({ equipmenId, listRate, getRateData, setListRate }) {
                                 <span>3</span>
                                 <FaStar className="text-yellow-400 text-2xl" />
                                 <div className="bg-gray-200 dark:bg-gray-700 mx-2 rounded-full w-full h-2.5">
-                                    <div className="bg-blue-600 rounded-full h-2.5" style={{ width: '45%' }}></div>
+                                    <div
+                                        className="bg-blue-600 rounded-full h-2.5"
+                                        style={{ width: getWidthBar(3) }}
+                                    ></div>
                                 </div>
                                 <p className="flex-shrink-0 text-sm">{listRateEachStar[3]} đánh giá</p>
                             </li>
@@ -113,7 +135,10 @@ function Evaluation({ equipmenId, listRate, getRateData, setListRate }) {
                                 <span>2</span>
                                 <FaStar className="text-yellow-400 text-2xl" />
                                 <div className="bg-gray-200 dark:bg-gray-700 mx-2 rounded-full w-full h-2.5">
-                                    <div className="bg-blue-600 rounded-full h-2.5" style={{ width: '45%' }}></div>
+                                    <div
+                                        className="bg-blue-600 rounded-full h-2.5"
+                                        style={{ width: getWidthBar(2) }}
+                                    ></div>
                                 </div>
                                 <p className="flex-shrink-0 text-sm">{listRateEachStar[2]} đánh giá</p>
                             </li>
@@ -121,7 +146,10 @@ function Evaluation({ equipmenId, listRate, getRateData, setListRate }) {
                                 <span>1</span>
                                 <FaStar className="text-yellow-400 text-2xl" />
                                 <div className="bg-gray-200 dark:bg-gray-700 mx-2 rounded-full w-full h-2.5">
-                                    <div className="bg-blue-600 rounded-full h-2.5" style={{ width: '45%' }}></div>
+                                    <div
+                                        className="bg-blue-600 rounded-full h-2.5"
+                                        style={{ width: getWidthBar(1) }}
+                                    ></div>
                                 </div>
                                 <p className="flex-shrink-0 text-sm">{listRateEachStar[1]} đánh giá</p>
                             </li>

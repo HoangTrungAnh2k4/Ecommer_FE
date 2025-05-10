@@ -17,9 +17,9 @@ function ManageAccount() {
     const { userInfo } = useUser();
 
     return (
-        <div className="container flex gap-20">
-            <div className="h-fit min-h-[300px] w-[300px] rounded-xl bg-white px-8 pt-4 shadow">
-                <h3 className="text-lg font-semibold">Quản lý tài khoản</h3>
+        <div className="flex gap-20 container">
+            <div className="bg-white shadow px-8 pt-4 rounded-xl w-[300px] h-fit min-h-[300px]">
+                <h3 className="font-semibold text-lg">Quản lý tài khoản</h3>
                 <ul className="mt-6">
                     {tabs.map((tab) => (
                         <li
@@ -35,31 +35,31 @@ function ManageAccount() {
             </div>
             {activeTab === 'account' && (
                 <div className="container">
-                    <h3 className="text-lg font-semibold">Tài khoản</h3>
+                    <h3 className="font-semibold text-lg">Tài khoản</h3>
 
                     <div className="flex items-center gap-12">
                         <div className="flex flex-col">
-                            <label className="mb-2 mt-6 text-sm text-textColor2">Số điện thoại</label>
+                            <label className="mt-6 mb-2 text-textColor2 text-sm">Số điện thoại</label>
                             <input
                                 type="text"
                                 readOnly
                                 placeholder={userInfo?.phoneNumber}
-                                className="h-fit rounded-lg border px-4 py-2 text-sm outline-none"
+                                className="px-4 py-2 border rounded-lg outline-none h-fit text-sm"
                             />
 
-                            <label className="mb-2 mt-6 text-sm text-textColor2">Họ tên</label>
+                            <label className="mt-6 mb-2 text-textColor2 text-sm">Họ tên</label>
                             <input
                                 type="text"
                                 readOnly
                                 placeholder={userInfo?.username}
-                                className="h-fit rounded-lg border px-4 py-2 text-sm outline-none"
+                                className="px-4 py-2 border rounded-lg outline-none h-fit text-sm"
                             />
                         </div>
                         <div className="mt-8">
                             <img
-                                src="https://cdn.kona-blue.com/upload/kona-blue_com/post/images/2024/09/18/457/avatar-mac-dinh-12.jpg"
+                                src="https://www.rophim.me/images//avatars/pack1/14.jpg"
                                 alt=""
-                                className="size-[115px] rounded-full border-2 border-gray-300"
+                                className="border-2 border-gray-300 rounded-full size-[115px]"
                             />
                         </div>
                     </div>

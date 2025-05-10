@@ -16,11 +16,15 @@ function Slider({ list }) {
                 },
                 768: {
                     width: 768,
-                    slidesPerView: 2,
+                    slidesPerView: 3,
                 },
                 992: {
                     width: 992,
-                    slidesPerView: 3,
+                    slidesPerView: 4,
+                },
+                1024: {
+                    width: 1024,
+                    slidesPerView: 4,
                 },
                 1200: {
                     width: 1260,

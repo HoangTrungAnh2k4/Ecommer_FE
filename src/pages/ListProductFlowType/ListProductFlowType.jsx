@@ -139,11 +139,11 @@ function ListProductFlowType() {
                 <h3 className="font-semibold text-white text-3xl text-center">TOP 5 SẢN PHẨM</h3>
                 <div className="flex gap-6 mt-6">
                     {loading ? (
-                        <div className="flex justify-center items-center bg-[#f8f8f8] border rounded-lg h-[300px] text-[#515151]">
-                            Loading...
+                        <div className="flex justify-center items-center w-full">
+                            <div className="border-4 border-yellow-600 border-t-transparent rounded-full w-16 h-16 animate-spin" />
                         </div>
                     ) : listBestSeller.length === 0 ? (
-                        <div className="flex justify-center items-center bg-[#f8f8f8] border rounded-lg h-[300px] text-[#515151]">
+                        <div className="flex justify-center items-center bg-[#f8f8f8] border rounded-lg w-full h-[300px] text-[#515151]">
                             Không có sản phẩm nào
                         </div>
                     ) : (
