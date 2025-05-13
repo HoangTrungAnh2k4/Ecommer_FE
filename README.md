@@ -1,4 +1,4 @@
-# E-commerce Frontend
+# E-commerce website
 
 This is the frontend of an E-commerce web application built with React.js, Tailwind CSS, and Vite. The project is designed for learning and demonstration purposes.
 
@@ -13,7 +13,7 @@ This is the frontend of an E-commerce web application built with React.js, Tailw
 ## Tech Stack
 
 - **Frontend**: React.js, Tailwind CSS, Ant Design, Swiper.js
+- **Backend**: Node.js (Express), Mongodb (Mongoose) 
 - **State Management**: React Context API
 - **API Communication**: Axios
 - **Utilities**: React Toastify, React Icons
-- **Build Tool**: Vite
