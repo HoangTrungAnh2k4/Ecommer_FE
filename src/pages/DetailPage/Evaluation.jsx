@@ -16,6 +16,11 @@ function Evaluation({ equipmenId, listRate, getRateData, setListRate }) {
     const { userInfo } = useUser();
 
     const hanldeEvaluetion = async () => {
+        if (!userInfo) {
+            toast.warning('Vui lòng đăng nhập để đánh giá sản phẩm');
+            return;
+        }
+
         try {
             if (rate === 0) {
                 toast.warning('Vui lòng đánh giá sản phẩm');
@@ -43,8 +48,6 @@ function Evaluation({ equipmenId, listRate, getRateData, setListRate }) {
     };
 
     const getWidthBar = (value) => {
-        console.log(value);
-
         const total = listRate.length;
 
         const count = listRateEachStar[value];

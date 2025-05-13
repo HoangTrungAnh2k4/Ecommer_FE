@@ -62,7 +62,7 @@ createRoot(document.getElementById('root')).render(
                                     );
                                 })}
                             </Routes>
-                            <ToastContainer autoClose={3000} />
+                            <ToastContainer autoClose={1500} />
                         </BrowserRouter>
                     </UserProvider>
                 </ListItemBuyWrapper>

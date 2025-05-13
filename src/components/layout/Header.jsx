@@ -7,10 +7,14 @@ import logo from '../../assets/images/general/logo.png';
 import Cart from '../ui/Cart';
 import { FaSignOutAlt } from 'react-icons/fa';
 import { FaUser } from 'react-icons/fa6';
+import { useUser } from '../hooks/UserContext';
+
+const avatr = 'https://www.rophim.me/images//avatars/pack1/14.jpg';
 
 function HeaderPage() {
-    const avatr = 'https://www.rophim.me/images//avatars/pack1/14.jpg';
     const navigation = useNavigate();
+
+    const { userInfo } = useUser();
 
     const handleLogout = () => {
         localStorage.clear('access_token');
@@ -83,18 +87,29 @@ function HeaderPage() {
                     <Cart />
                 </div>
 
-                <Dropdown menu={{ items }} trigger={['click']} placement="bottomRight">
-                    <a onClick={(e) => e.preventDefault()} className="cursor-pointer">
-                        <Space>
-                            <img
-                                src={avatr}
-                                alt=""
-                                className="border rounded-full size-11 object-center object-cover"
-                            />
-                        </Space>
-                    </a>
-                </Dropdown>
-                <Link to={'/login'}></Link>
+                {!userInfo && (
+                    <Link
+                        to={'/login'}
+                        className="flex justify-center items-start gap-2 bg-white px-3.5 py-2 rounded-full text-black cursor-pointer"
+                    >
+                        <FaUser />
+                        <p className="font-semibold text-sm">Thành viên</p>
+                    </Link>
+                )}
+
+                {userInfo && (
+                    <Dropdown menu={{ items }} trigger={['click']} placement="bottomRight">
+                        <a onClick={(e) => e.preventDefault()} className="cursor-pointer">
+                            <Space>
+                                <img
+                                    src={avatr}
+                                    alt=""
+                                    className="border rounded-full size-11 object-center object-cover"
+                                />
+                            </Space>
+                        </a>
+                    </Dropdown>
+                )}
             </div>
         </div>
     );
