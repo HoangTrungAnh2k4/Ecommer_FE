@@ -8,6 +8,7 @@ import Cart from '../ui/Cart';
 import { FaSignOutAlt } from 'react-icons/fa';
 import { FaUser } from 'react-icons/fa6';
 import { useUser } from '../hooks/UserContext';
+import { use } from 'react';
 
 const avatr = 'https://www.rophim.me/images//avatars/pack1/14.jpg';
 
@@ -31,7 +32,7 @@ function HeaderPage() {
     const items = [
         {
             label: (
-                <div className="mb-4 pr-4 cursor-text">
+                <div className="mb-4 cursor-text pr-4">
                     <p className="mb-1 text-sm">Xin chào</p>
                 </div>
             ),
@@ -41,7 +42,7 @@ function HeaderPage() {
 
         {
             label: (
-                <Link to="/manage-account" className="flex items-center mb-2 pr-4">
+                <Link to="/manage-account" className="mb-2 flex items-center pr-4">
                     <FaUser className="mr-3 text-sm" />
                     Tài khoản
                 </Link>
@@ -63,37 +64,37 @@ function HeaderPage() {
     ];
 
     return (
-        <div className="z-50 relative flex items-center bg-background px-20 py-2">
+        <div className="relative z-50 flex items-center bg-background px-20 py-2">
             <Link to={'/'}>
                 <img src={logo} alt="" className="w-[150px]" />
             </Link>
-            <div className="flex bg-white mx-auto rounded-md w-[40%]">
+            <div className="mx-auto flex w-[40%] rounded-md bg-white">
                 <input
                     onKeyDown={(e) => {
                         if (e.key === 'Enter') handleSearch(e);
                     }}
                     type="text"
                     placeholder="Search Something..."
-                    className="bg-white px-4 py-3 border-none rounded-md focus:outline-none focus:ring-0 w-full text-gray-600 text-sm"
+                    className="w-full rounded-md border-none bg-white px-4 py-3 text-sm text-gray-600 focus:outline-none focus:ring-0"
                 />
-                <button type="button" className="flex justify-center items-center bg-[#f9bb01] m-1 px-5 rounded-md">
-                    <IoSearch className="text-white text-2xl" />
+                <button type="button" className="m-1 flex items-center justify-center rounded-md bg-[#f9bb01] px-5">
+                    <IoSearch className="text-2xl text-white" />
                 </button>
             </div>
 
             <div className="flex items-center gap-6">
-                <div className="group before:top-0 before:-right-5 before:absolute relative before:w-[100px] before:h-[130%] before:content-['']">
-                    <IoCart className="hover:bg-white my-auto p-1 rounded-full text-[2.5rem] cursor-pointer" />
-                    <Cart />
+                <div className="group relative before:absolute before:-right-5 before:top-0 before:h-[130%] before:w-[100px] before:content-['']">
+                    <IoCart className="my-auto cursor-pointer rounded-full p-1 text-[2.5rem] hover:bg-white" />
+                    {userInfo && <Cart />}
                 </div>
 
                 {!userInfo && (
                     <Link
                         to={'/login'}
-                        className="flex justify-center items-start gap-2 bg-white px-3.5 py-2 rounded-full text-black cursor-pointer"
+                        className="flex cursor-pointer items-start justify-center gap-2 rounded-full bg-white px-3.5 py-2 text-black"
                     >
                         <FaUser />
-                        <p className="font-semibold text-sm">Thành viên</p>
+                        <p className="text-sm font-semibold">Thành viên</p>
                     </Link>
                 )}
 
@@ -104,7 +105,7 @@ function HeaderPage() {
                                 <img
                                     src={avatr}
                                     alt=""
-                                    className="border rounded-full size-11 object-center object-cover"
+                                    className="size-11 rounded-full border object-cover object-center"
                                 />
                             </Space>
                         </a>
